@@ -98,6 +98,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;paddin
 .next{display:block;margin-top:5rem;font:800 clamp(1.8rem,6vw,5rem)/1 Archivo,sans-serif;border-top:2px solid var(--ink);padding-top:1.5rem}
 .x{position:fixed;top:calc(1rem + env(safe-area-inset-top,0px));right:clamp(1.2rem,4vw,4rem);z-index:5;background:var(--ac);color:#fff;border-radius:99px;padding:.7rem 1.4rem;font-weight:700}
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+.cert-list{display:grid;gap:1rem;margin-top:2rem}.cert-item{display:flex;align-items:center;gap:1.2rem;padding:1rem 0;border-bottom:1px solid var(--ln)}.cert-item img{width:clamp(76px,14vw,140px);aspect-ratio:4/3;object-fit:cover;border-radius:8px}.cert-item a{display:inline-block;margin-top:.4rem;color:var(--ac);font-weight:700}
 </style>
 </head>
 <body>
@@ -114,14 +115,14 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;paddin
 <div class="hbg" data-p="8"></div><canvas id="wg" aria-hidden="true"></canvas>
 <div class="fl f1" data-p="-30"></div><div class="fl f2" data-p="40"></div><div class="fl f3" data-p="-60"></div>
 <div class="hw"><h1 id="hw"><span class="hs" id="hwl"></span><span class="hg"></span><span class="hs" id="hwr"></span></h1><canvas id="mc" aria-hidden="true"></canvas></div>
-<div class="row"><p class="mut">Graphic designer. Branding, posters, editorial and motion.<br>Replace this line with your own introduction.</p><a class="btn mag" href="#works" data-go="#works">See the work</a></div>
+<div class="row"><p class="mut" id="heroIntro">Graphic designer. Branding, posters, editorial and motion.\nReplace this line with your own introduction.</p><a class="btn mag" href="#works" data-go="#works">See the work</a></div>
 </section>
 
 <section class="wrap about" id="about">
 <div class="frame spot" id="spot" role="img" aria-label="Foto profil"><div class="ly a"></div><div class="ly b"></div></div>
 <div class="txt"><h2 class="big" data-split>About me</h2>
-<p>Short biography goes here. Write two or three sentences about who you are, where you work and what you make.</p>
-<p><b>Design philosophy.</b> Add the idea that guides your work, in your own words.</p>
+<p id="bioText">Short biography goes here. Write two or three sentences about who you are, where you work and what you make.</p>
+<p id="philosophyText"><b>Design philosophy.</b> Add the idea that guides your work, in your own words.</p>
 <div class="stats" id="stats"></div><div class="tags" id="tags"></div></div>
 </section>
 
@@ -131,35 +132,59 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;paddin
 
 <section class="wrap" id="journey"><h2 class="big" data-split>Creative journey</h2><div class="jr" id="jr"></div></section>
 
-<section class="wrap dk" id="skills"><h2 class="big" data-split>Skills and software</h2><div class="sk"><div id="sw"></div><div><h3>Disciplines</h3><p class="mut" id="disc"></p></div></div></section>
+<section class="wrap" id="certificates"><h2 class="big" data-split>Certificates</h2><div class="cert-list" id="certList"></div></section>\n<section class="wrap dk" id="skills"><h2 class="big" data-split>Skills and software</h2><div class="sk"><div id="sw"></div><div><h3>Disciplines</h3><p class="mut" id="disc"></p></div></div></section>
 
 <section class="wrap dk contact" id="contact" style="margin-top:.5rem"><h2 class="big" data-split>Let’s work together</h2><a class="mail mag" href="mailto:hello@yourname.com" data-cur="Write">hello@yourname.com</a><div class="soc" id="soc"></div></section>
 </main>
 <footer><span>© <span id="yr"></span> Your Name</span><button data-go="#hero" class="mag">Back to top</button></footer>
 <div id="detail" hidden tabindex="-1" role="dialog" aria-label="Project details"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">})();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+(async function initPortfolio(){
 /* ===== EDIT YOUR CONTENT HERE (all values are placeholders) ===== */
-const CATS=['Branding','Logo Design','Poster Design','Social Media Design','Editorial Design','Packaging','UI Visual Design','Motion Graphics'];
+let CATS=['Branding','Logo Design','Poster Design','Social Media Design','Editorial Design','Packaging','UI Visual Design','Motion Graphics'];
 const PAL=[['#2B35FF','#E7E8EA','#17181B'],['#17181B','#2B35FF','#E7E8EA'],['#E7E8EA','#17181B','#2B35FF'],['#8E96FF','#17181B','#E7E8EA']];
 /* imgs: add image URLs (cover first, then up to 4 more). Empty = generated artwork */
-const P=CATS.map((c,i)=>({n:i,id:c.toLowerCase().replace(/ /g,'-'),cat:c,title:c+' project title',year:'20XX',
+let P=CATS.map((c,i)=>({n:i,id:c.toLowerCase().replace(/ /g,'-'),cat:c,title:c+' project title',year:'20XX',
  desc:'Describe the brief, the client and the result.',concept:'Explain the idea behind the design.',
  process:['Research','Sketches','Refinement','Delivery'],tools:['Illustrator','Photoshop'],imgs:[],c:PAL[i%4]}));
-const STATS=[['Years of experience',5],['Projects delivered',40],['Happy clients',25]];
-const TAGS=['Brand identity','Typography','Layout','Illustration','Motion'];
-const JOURNEY=[['20XX','Milestone one','Where you studied or started.'],['20XX','Milestone two','A role, a client or a turning point.'],['20XX','Milestone three','What you do now.']];
-const SOFT=[['Illustrator',90],['Photoshop',85],['InDesign',80],['Figma',75],['After Effects',65]];
-const SOCIAL=[['Behance','https://www.behance.net/'],['Instagram','https://www.instagram.com/'],['LinkedIn','https://www.linkedin.com/']];
+let STATS=[['Years of experience',5],['Projects delivered',40],['Happy clients',25]];
+let TAGS=['Brand identity','Typography','Layout','Illustration','Motion'];
+let JOURNEY=[['20XX','Milestone one','Where you studied or started.'],['20XX','Milestone two','A role, a client or a turning point.'],['20XX','Milestone three','What you do now.']];
+let SOFT=[['Illustrator',90],['Photoshop',85],['InDesign',80],['Figma',75],['After Effects',65]];
+let SOCIAL=[['Behance','https://www.behance.net/'],['Instagram','https://www.instagram.com/'],['LinkedIn','https://www.linkedin.com/']];
 /* Foto profil: PORTRAIT_IMG = gambar awal (kosong dulu), REVEAL_IMG = gambar kedua yang muncul di sekitar kursor/sentuhan. Isi dengan data: URI gambar. */
-const PORTRAIT_IMG='',REVEAL_IMG='';
+let PORTRAIT_IMG='',REVEAL_IMG='';
 /* Kata besar di hero (huruf terpisah, maskot 3D di tengah). Ganti dengan namamu. */
-const HERO_WORD='PORTOFOLIO';
+let HERO_WORD='PORTOFOLIO';
 /* ================================================================ */
+
+const readCMS = async (path, fallback) => { try { const r=await fetch(path,{cache:'no-cache'}); if(!r.ok) throw Error('HTTP '+r.status); return await r.json(); } catch(e) { console.warn('CMS fallback:',path,e); return fallback; } };
+const [cmsProjects,cmsProfile,cmsSkills,cmsExperience,cmsCertificates,cmsContact]=await Promise.all([
+ readCMS('./data/projects.json',{projects:[]}),readCMS('./data/profile.json',{}),readCMS('./data/skills.json',{}),
+ readCMS('./data/experience.json',{items:[]}),readCMS('./data/certificates.json',{items:[]}),readCMS('./data/contact.json',{})
+]);
+if(Array.isArray(cmsProjects.projects)&&cmsProjects.projects.length){P=cmsProjects.projects.map((p,i)=>({n:i,id:p.slug||'project-'+(i+1),cat:p.category||'Other',title:p.title||'Untitled project',year:p.year||'',desc:p.description||'',concept:p.concept||'',process:Array.isArray(p.process)?p.process:[],tools:Array.isArray(p.tools)?p.tools:[],imgs:Array.isArray(p.gallery)?p.gallery:[],c:Array.isArray(p.colors)&&p.colors.length>=3?p.colors:PAL[i%PAL.length]}));CATS=[...new Set(P.map(p=>p.cat))];}
+if(Array.isArray(cmsProfile.stats))STATS=cmsProfile.stats.map(s=>[s.label,s.value]);
+if(Array.isArray(cmsProfile.tags))TAGS=cmsProfile.tags;
+if(Array.isArray(cmsExperience.items))JOURNEY=cmsExperience.items.map(x=>[x.year,x.title,x.description]);
+if(Array.isArray(cmsSkills.software))SOFT=cmsSkills.software.map(x=>[x.name,x.level]);
+if(typeof cmsSkills.disciplines==='string'&&cmsSkills.disciplines)window.__cmsDisciplines=cmsSkills.disciplines;
+if(Array.isArray(cmsContact.socials))SOCIAL=cmsContact.socials.map(x=>[x.name,x.url]);
+if(cmsProfile.heroWord)HERO_WORD=cmsProfile.heroWord;
+if(typeof cmsProfile.portraitImage==='string')PORTRAIT_IMG=cmsProfile.portraitImage;
+if(typeof cmsProfile.revealImage==='string')REVEAL_IMG=cmsProfile.revealImage;
+if(cmsProfile.pageTitle)document.title=cmsProfile.pageTitle;
+const intro=document.querySelector('#heroIntro');if(intro&&cmsProfile.heroIntro){intro.textContent=cmsProfile.heroIntro;intro.style.whiteSpace='pre-line';}
+const bio=document.querySelector('#bioText');if(bio&&cmsProfile.biography)bio.textContent=cmsProfile.biography;
+const philosophy=document.querySelector('#philosophyText');if(philosophy&&cmsProfile.philosophy)philosophy.innerHTML='<b>Design philosophy.</b> '+cmsProfile.philosophy;
+const email=document.querySelector('#contact .mail');if(email&&cmsContact.email){email.textContent=cmsContact.email;email.href='mailto:'+cmsContact.email;}
+
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,HOVER=matchMedia('(hover:hover) and (pointer:fine)').matches;
 gsap.registerPlugin(ScrollTrigger);
@@ -180,10 +205,11 @@ $('#track').innerHTML=P.map(card).join('');
 $('#stats').innerHTML=STATS.map(s=>`<div><b data-n="${s[1]}">0</b><span class="mut">${s[0]}</span></div>`).join('');
 $('#tags').innerHTML=TAGS.map(t=>`<span>${t}</span>`).join('');
 $('#jr').innerHTML=JOURNEY.map(j=>`<div><b>${j[0]}</b><b>${j[1]}</b><p class="mut">${j[2]}</p></div>`).join('');
+$('#certList').innerHTML=(cmsCertificates.items||[]).map(c=>`<article class="cert-item">${c.image?`<img src="${c.image}" alt="${c.title||'Certificate'}" loading="lazy">`:''}<div><b>${c.title||''}</b><p class="mut">${[c.issuer,c.year].filter(Boolean).join(' · ')}</p>${c.credentialUrl?`<a href="${c.credentialUrl}" target="_blank" rel="noopener">View credential ↗</a>`:''}</div></article>`).join('');
 $('#sw').innerHTML=SOFT.map(s=>`<div class="bar"><div><b>${s[0]}</b><span>${s[1]}%</span></div><i style="--w:${s[1]}%"></i></div>`).join('');
-$('#disc').textContent=CATS.join(', ');
+$('#disc').textContent=window.__cmsDisciplines||CATS.join(', ');
 $('#soc').innerHTML=SOCIAL.map(s=>`<a href="${s[1]}" target="_blank" rel="noopener" class="btn mag" style="background:var(--bg);color:var(--ink)">${s[0]}</a>`).join('');
-$('#menu').innerHTML=['About','Works','Cats','Journey','Skills','Contact'].map(x=>`<a href="#${x.toLowerCase()}" data-go="#${x.toLowerCase()}">${x==='Cats'?'Categories':x}</a>`).join('');
+$('#menu').innerHTML=['About','Works','Cats','Journey','Certificates','Skills','Contact'].map(x=>`<a href="#${x.toLowerCase()}" data-go="#${x.toLowerCase()}">${x==='Cats'?'Categories':x}</a>`).join('');
 $('#yr').textContent=new Date().getFullYear();
 let filt='All';
 function grid(){const l=filt==='All'?P:P.filter(p=>p.cat===filt);const g=$('#grid');g.innerHTML=l.map(card).join('');if(!RM)gsap.from(g.children,{opacity:0,y:30,stagger:.06,duration:.7,ease:'power3.out'});ScrollTrigger.refresh()}
