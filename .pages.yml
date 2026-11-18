@@ -5,60 +5,63 @@ media:
 content:
   - name: portfolio
     label: Portfolio projects
-    type: collection
-    path: data/projects
+    type: file
+    path: data/projects.json
     format: json
-    filename: "{slug}.json"
     fields:
-      - name: slug
-        label: Project URL ID
-        type: string
-        required: true
-        pattern: "^[a-z0-9-]+$"
-      - name: title
-        label: Project title
-        type: string
-        required: true
-      - name: category
-        label: Category
-        type: string
-        required: true
-      - name: year
-        label: Year
-        type: string
-      - name: description
-        label: Project description
-        type: text
-      - name: concept
-        label: Design concept
-        type: text
-      - name: process
-        label: Creative process
-        type: string
-        list: true
-      - name: tools
-        label: Software used
-        type: string
-        list: true
-      - name: gallery
-        label: Project images (cover first, then gallery)
-        type: image
-        options:
-          multiple:
-            max: 5
-          unique: true
-          extensions: [jpg, jpeg, png, webp]
-          rename: safe
-      - name: colors
-        label: Artwork colors
-        type: string
+      - name: projects
+        label: Projects
+        type: object
         list:
-          min: 3
-          max: 3
-    view:
-      primary: title
-      fields: [title, category, year]
-
+          min: 0
+          max: 100
+          collapsible: true
+        fields:
+          - name: slug
+            label: Project URL ID
+            type: string
+            required: true
+            pattern: "^[a-z0-9-]+$"
+          - name: title
+            label: Project title
+            type: string
+            required: true
+          - name: category
+            label: Category
+            type: string
+            required: true
+          - name: year
+            label: Year
+            type: string
+          - name: description
+            label: Project description
+            type: text
+          - name: concept
+            label: Design concept
+            type: text
+          - name: process
+            label: Creative process
+            type: string
+            list: true
+          - name: tools
+            label: Software used
+            type: string
+            list: true
+          - name: gallery
+            label: Project images (cover first, then gallery)
+            type: image
+            options:
+              multiple:
+                max: 5
+              unique: true
+              extensions: [jpg, jpeg, png, webp]
+              rename: safe
+          - name: colors
+            label: Artwork colors
+            type: string
+            list:
+              min: 3
+              max: 3
   - name: profile
     label: Profile
     type: file
@@ -138,36 +141,50 @@ content:
     type: file
     path: data/experience.json
     format: json
-    list: true
     fields:
-      - name: year
-        type: string
-      - name: title
-        type: string
-      - name: description
-        type: text
+      - name: items
+        label: Experience entries
+        type: object
+        list:
+          min: 0
+          max: 50
+          collapsible: true
+        fields:
+          - name: year
+            type: string
+          - name: title
+            type: string
+          - name: description
+            type: text
 
   - name: certificates
     label: Certificates
     type: file
     path: data/certificates.json
     format: json
-    list: true
     fields:
-      - name: title
-        type: string
-      - name: issuer
-        type: string
-      - name: year
-        type: string
-      - name: credentialUrl
-        label: Credential link
-        type: string
-      - name: image
-        label: Certificate image
-        type: image
-        options:
-          path: certificates
+      - name: items
+        label: Certificates
+        type: object
+        list:
+          min: 0
+          max: 50
+          collapsible: true
+        fields:
+          - name: title
+            type: string
+          - name: issuer
+            type: string
+          - name: year
+            type: string
+          - name: credentialUrl
+            label: Credential link
+            type: string
+          - name: image
+            label: Certificate image
+            type: image
+            options:
+              path: certificates
 
   - name: contact
     label: Contact
