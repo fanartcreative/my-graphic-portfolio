@@ -1,0 +1,25 @@
+{
+  "disciplines": "Branding, Logo Design, Poster Design, Social Media Design, Editorial Design, Packaging, UI Visual Design, Motion Graphics",
+  "software": [
+    {
+      "name": "Illustrator",
+      "level": 90
+    },
+    {
+      "name": "Photoshop",
+      "level": 85
+    },
+    {
+      "name": "InDesign",
+      "level": 80
+    },
+    {
+      "name": "Figma",
+      "level": 75
+    },
+    {
+      "name": "After Effects",
+      "level": 65
+    }
+  ]
+}
