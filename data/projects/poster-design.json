@@ -1,0 +1,24 @@
+{
+  "slug": "poster-design",
+  "category": "Poster Design",
+  "title": "Poster Design project title",
+  "year": "20XX",
+  "description": "Describe the brief, the client and the result.",
+  "concept": "Explain the idea behind the design.",
+  "process": [
+    "Research",
+    "Sketches",
+    "Refinement",
+    "Delivery"
+  ],
+  "tools": [
+    "Illustrator",
+    "Photoshop"
+  ],
+  "gallery": [],
+  "colors": [
+    "#E7E8EA",
+    "#17181B",
+    "#2B35FF"
+  ]
+}
