@@ -51,6 +51,10 @@ nav ul a:hover::after{transform:scaleX(1);transform-origin:left}
 .frame>*{display:block;width:100%;height:100%;object-fit:cover;scale:1.12;transition:scale .9s cubic-bezier(.2,.7,.2,1)}
 @media(hover:hover){.card:hover .frame>*{scale:1.24}}
 .about .txt p{max-width:60ch;margin-top:1.2rem}
+.spot{--r:0px;--x:50%;--y:50%;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.spot>*{scale:1;transition:none}
+.ly{position:absolute;inset:0;background:center/cover no-repeat}
+.ly.b{background-color:var(--ac);-webkit-mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),#000 55%,transparent 100%);mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),#000 55%,transparent 100%)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem;border-top:2px solid var(--ink);padding-top:1.5rem}
 .stats b{display:block;font:800 clamp(2.4rem,6vw,5rem)/1 Archivo,sans-serif}
 .tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem}.tags span{border:1.5px solid var(--ink);border-radius:99px;padding:.3rem .9rem}
@@ -110,7 +114,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;paddin
 </section>
 
 <section class="wrap about" id="about">
-<div class="frame" data-cur="You"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Portrait placeholder"><rect width="400" height="500" fill="#2B35FF"/><circle cx="200" cy="190" r="80" fill="#E7E8EA"/><path d="M60 500c0-130 60-190 140-190s140 60 140 190z" fill="#17181B"/></svg></div>
+<div class="frame spot" id="spot" role="img" aria-label="Foto profil"><div class="ly a"></div><div class="ly b"></div></div>
 <div class="txt"><h2 class="big" data-split>About me</h2>
 <p>Short biography goes here. Write two or three sentences about who you are, where you work and what you make.</p>
 <p><b>Design philosophy.</b> Add the idea that guides your work, in your own words.</p>
@@ -146,6 +150,8 @@ const TAGS=['Brand identity','Typography','Layout','Illustration','Motion'];
 const JOURNEY=[['20XX','Milestone one','Where you studied or started.'],['20XX','Milestone two','A role, a client or a turning point.'],['20XX','Milestone three','What you do now.']];
 const SOFT=[['Illustrator',90],['Photoshop',85],['InDesign',80],['Figma',75],['After Effects',65]];
 const SOCIAL=[['Behance','https://www.behance.net/'],['Instagram','https://www.instagram.com/'],['LinkedIn','https://www.linkedin.com/']];
+/* Foto profil: PORTRAIT_IMG = gambar awal (kosong dulu), REVEAL_IMG = gambar kedua yang muncul di sekitar kursor/sentuhan. Isi dengan data: URI gambar. */
+const PORTRAIT_IMG='',REVEAL_IMG='';
 /* ================================================================ */
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,HOVER=matchMedia('(hover:hover) and (pointer:fine)').matches;
@@ -202,7 +208,7 @@ if(HOVER){const c=$('#cur'),xt=gsap.quickTo(c,'x',{duration:.4,ease:'power3'}),y
 if(!RM){
  gsap.to('#bar',{scaleX:1,ease:'none',scrollTrigger:{scrub:.2,start:0,end:'max'}});
  $$('[data-p]').forEach(el=>gsap.to(el,{yPercent:+el.dataset.p,ease:'none',scrollTrigger:{trigger:'#hero',scrub:true,start:'top top',end:'bottom top'}}));
- $$('.about .frame>*').forEach(el=>gsap.fromTo(el,{yPercent:-8},{yPercent:8,ease:'none',scrollTrigger:{trigger:el.parentElement,scrub:true}}));
+ $$('.about .frame:not(.spot)>*').forEach(el=>gsap.fromTo(el,{yPercent:-8},{yPercent:8,ease:'none',scrollTrigger:{trigger:el.parentElement,scrub:true}}));
  $$('#track .frame,#grid .frame').forEach(f=>gsap.from(f,{clipPath:'inset(0 0 100% 0)',duration:1.1,ease:'power4.out',scrollTrigger:{trigger:f,start:'top 92%'}}));
  $$('.dk').forEach(s=>gsap.from(s,{clipPath:'inset(10% 5% 0 5% round 40px)',ease:'none',scrollTrigger:{trigger:s,start:'top bottom',end:'top 35%',scrub:true}}));
  $$('.jr div').forEach(r=>gsap.from(r,{opacity:0,x:-40,duration:.9,ease:'power3.out',scrollTrigger:{trigger:r,start:'top 90%'}}));
@@ -230,6 +236,19 @@ function route(){const p=P.find(x=>'p-'+x.id===location.hash.slice(1)),d=$('#det
  }else if(cur){cur=null;const done=()=>{d.hidden=true;d.innerHTML='';lenis.start()};
   RM?done():gsap.to(d,{clipPath:'circle(0px at 50% 50%)',duration:.7,ease:'power3.inOut',onComplete:done})}}
 addEventListener('hashchange',route);
+
+/* efek lapisan kedua pada foto profil */
+const spot=$('#spot');
+if(PORTRAIT_IMG)spot.firstElementChild.style.backgroundImage=`url(${PORTRAIT_IMG})`;
+if(REVEAL_IMG)spot.lastElementChild.style.backgroundImage=`url(${REVEAL_IMG})`;
+const mv=e=>{const r=spot.getBoundingClientRect();spot.style.setProperty('--x',e.clientX-r.left+'px');spot.style.setProperty('--y',e.clientY-r.top+'px')};
+const show=e=>{mv(e);gsap.to(spot,{'--r':(innerWidth<700?90:130)+'px',duration:RM?.01:.5,ease:'power3.out',overwrite:'auto'})};
+const hide=()=>gsap.to(spot,{'--r':'0px',duration:RM?.01:.5,ease:'power3.in',overwrite:'auto'});
+let st;
+['pointerenter','pointerdown'].forEach(ev=>spot.addEventListener(ev,e=>{clearTimeout(st);show(e)}));
+spot.addEventListener('pointermove',mv);
+spot.addEventListener('pointerleave',hide);
+['pointerup','pointercancel'].forEach(ev=>spot.addEventListener(ev,e=>{if(e.pointerType!=='mouse'){clearTimeout(st);st=setTimeout(hide,1200)}}));
 
 /* preloader */
 function heroIn(){if(RM)return;gsap.to('.hero .i',{yPercent:0,stagger:.09,duration:1.2,ease:'power4.out'});gsap.from('.fl',{scale:0,duration:1.2,stagger:.1,ease:'back.out(1.6)'});gsap.from('.hero .row',{opacity:0,y:20,delay:.6,duration:.8})}
