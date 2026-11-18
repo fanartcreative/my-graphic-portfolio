@@ -166,10 +166,10 @@ let HERO_WORD='PORTOFOLIO';
 
 const readCMS = async (path, fallback) => { try { const r=await fetch(path,{cache:'no-cache'}); if(!r.ok) throw Error('HTTP '+r.status); return await r.json(); } catch(e) { console.warn('CMS fallback:',path,e); return fallback; } };
 const [cmsProjects,cmsProfile,cmsSkills,cmsExperience,cmsCertificates,cmsContact]=await Promise.all([
- readCMS('./data/projects.json',{projects:[]}),readCMS('./data/profile.json',{}),readCMS('./data/skills.json',{}),
+ readCMS('./data/projects.json',{projects:null}),readCMS('./data/profile.json',{}),readCMS('./data/skills.json',{}),
  readCMS('./data/experience.json',{items:[]}),readCMS('./data/certificates.json',{items:[]}),readCMS('./data/contact.json',{})
 ]);
-if(Array.isArray(cmsProjects.projects)&&cmsProjects.projects.length){P=cmsProjects.projects.map((p,i)=>({n:i,id:p.slug||'project-'+(i+1),cat:p.category||'Other',title:p.title||'Untitled project',year:p.year||'',desc:p.description||'',concept:p.concept||'',process:Array.isArray(p.process)?p.process:[],tools:Array.isArray(p.tools)?p.tools:[],imgs:Array.isArray(p.gallery)?p.gallery:[],c:Array.isArray(p.colors)&&p.colors.length>=3?p.colors:PAL[i%PAL.length]}));CATS=[...new Set(P.map(p=>p.cat))];}
+if(Array.isArray(cmsProjects.projects)){P=cmsProjects.projects.map((p,i)=>({n:i,id:p.slug||'project-'+(i+1),cat:p.category||'Other',title:p.title||'Untitled project',year:p.year||'',desc:p.description||'',concept:p.concept||'',process:Array.isArray(p.process)?p.process:[],tools:Array.isArray(p.tools)?p.tools:[],imgs:Array.isArray(p.gallery)?p.gallery:[],c:Array.isArray(p.colors)&&p.colors.length>=3?p.colors:PAL[i%PAL.length]}));CATS=[...new Set(P.map(p=>p.cat))];}
 if(Array.isArray(cmsProfile.stats))STATS=cmsProfile.stats.map(s=>[s.label,s.value]);
 if(Array.isArray(cmsProfile.tags))TAGS=cmsProfile.tags;
 if(Array.isArray(cmsExperience.items))JOURNEY=cmsExperience.items.map(x=>[x.year,x.title,x.description]);
@@ -180,10 +180,10 @@ if(cmsProfile.heroWord)HERO_WORD=cmsProfile.heroWord;
 if(typeof cmsProfile.portraitImage==='string')PORTRAIT_IMG=cmsProfile.portraitImage;
 if(typeof cmsProfile.revealImage==='string')REVEAL_IMG=cmsProfile.revealImage;
 if(cmsProfile.pageTitle)document.title=cmsProfile.pageTitle;
-if(cmsProfile.name){const brand=document.querySelector('nav a b');if(brand)brand.textContent=cmsProfile.name;const loaderName=document.querySelector('#pl span');if(loaderName)loaderName.innerHTML=cmsProfile.name+'<br>Graphic designer';const footer=document.querySelector('footer > span');if(footer)footer.textContent='© '+new Date().getFullYear()+' '+cmsProfile.name;}
+if(cmsProfile.name){const brand=document.querySelector('nav a b');if(brand)brand.textContent=cmsProfile.name;const loaderName=document.querySelector('#pl span');if(loaderName)loaderName.innerHTML=cmsProfile.name+'<br>Graphic designer';const footer=document.querySelector('footer > span');if(footer&&footer.lastChild)footer.lastChild.nodeValue=' '+cmsProfile.name;}
 const intro=document.querySelector('#heroIntro');if(intro&&cmsProfile.heroIntro){intro.textContent=cmsProfile.heroIntro;intro.style.whiteSpace='pre-line';}
 const bio=document.querySelector('#bioText');if(bio&&cmsProfile.biography)bio.textContent=cmsProfile.biography;
-const philosophy=document.querySelector('#philosophyText');if(philosophy&&cmsProfile.philosophy)philosophy.innerHTML='<b>Design philosophy.</b> '+cmsProfile.philosophy;
+const philosophy=document.querySelector('#philosophyText');if(philosophy&&cmsProfile.philosophy)philosophy.textContent='Design philosophy. '+cmsProfile.philosophy;
 const email=document.querySelector('#contact .mail');if(email&&cmsContact.email){email.textContent=cmsContact.email;email.href='mailto:'+cmsContact.email;}
 
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
