@@ -1,17 +1,19 @@
-[
-  {
-    "year": "20XX",
-    "title": "Milestone one",
-    "description": "Where you studied or started."
-  },
-  {
-    "year": "20XX",
-    "title": "Milestone two",
-    "description": "A role, a client or a turning point."
-  },
-  {
-    "year": "20XX",
-    "title": "Milestone three",
-    "description": "What you do now."
-  }
-]
+{
+  "items": [
+    {
+      "year": "20XX",
+      "title": "Milestone one",
+      "description": "Where you studied or started."
+    },
+    {
+      "year": "20XX",
+      "title": "Milestone two",
+      "description": "A role, a client or a turning point."
+    },
+    {
+      "year": "20XX",
+      "title": "Milestone three",
+      "description": "What you do now."
+    }
+  ]
+}
