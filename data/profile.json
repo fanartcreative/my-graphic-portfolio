@@ -1,0 +1,31 @@
+{
+  "pageTitle": "Your Name – Graphic Designer",
+  "name": "Your Name",
+  "heroWord": "PORTOFOLIO",
+  "heroIntro": "Graphic designer. Branding, posters, editorial and motion.\nReplace this line with your own introduction.",
+  "biography": "Short biography goes here. Write two or three sentences about who you are, where you work and what you make.",
+  "philosophy": "Add the idea that guides your work, in your own words.",
+  "portraitImage": "",
+  "revealImage": "",
+  "stats": [
+    {
+      "label": "Years of experience",
+      "value": 5
+    },
+    {
+      "label": "Projects delivered",
+      "value": 40
+    },
+    {
+      "label": "Happy clients",
+      "value": 25
+    }
+  ],
+  "tags": [
+    "Brand identity",
+    "Typography",
+    "Layout",
+    "Illustration",
+    "Motion"
+  ]
+}
