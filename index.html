@@ -180,7 +180,7 @@ if(cmsProfile.heroWord)HERO_WORD=cmsProfile.heroWord;
 if(typeof cmsProfile.portraitImage==='string')PORTRAIT_IMG=cmsProfile.portraitImage;
 if(typeof cmsProfile.revealImage==='string')REVEAL_IMG=cmsProfile.revealImage;
 if(cmsProfile.pageTitle)document.title=cmsProfile.pageTitle;
-if(cmsProfile.name){const brand=document.querySelector('nav a b');if(brand)brand.textContent=cmsProfile.name;const loaderName=document.querySelector('#pl span');if(loaderName)loaderName.innerHTML=cmsProfile.name+'<br>Graphic designer';const footer=document.querySelector('footer > span');if(footer&&footer.lastChild)footer.lastChild.nodeValue=' '+cmsProfile.name;}
+if(cmsProfile.name){const brand=document.querySelector('nav a b');if(brand)brand.textContent=cmsProfile.name;const loaderName=document.querySelector('#pl span');if(loaderName)loaderName.textContent=cmsProfile.name+' Graphic designer';const footer=document.querySelector('footer > span');if(footer&&footer.lastChild)footer.lastChild.nodeValue=' '+cmsProfile.name;}
 const intro=document.querySelector('#heroIntro');if(intro&&cmsProfile.heroIntro){intro.textContent=cmsProfile.heroIntro;intro.style.whiteSpace='pre-line';}
 const bio=document.querySelector('#bioText');if(bio&&cmsProfile.biography)bio.textContent=cmsProfile.biography;
 const philosophy=document.querySelector('#philosophyText');if(philosophy&&cmsProfile.philosophy)philosophy.textContent='Design philosophy. '+cmsProfile.philosophy;
