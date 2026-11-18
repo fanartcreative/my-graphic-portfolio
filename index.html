@@ -106,7 +106,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;paddin
 <div id="pl" aria-hidden="true"><span>Your Name<br>Graphic designer</span><b>0</b></div>
 <div id="cur" aria-hidden="true"><span></span></div>
 <nav><a href="#top" data-go="#hero"><b>Your Name</b></a>
-<ul><li><a href="#about" data-go="#about">About</a></li><li><a href="#works" data-go="#works">Selected works</a></li><li><a href="#cats" data-go="#cats">Categories</a></li><li><a href="#journey" data-go="#journey">Journey</a></li><li><a href="#skills" data-go="#skills">Skills</a></li><li><a href="#contact" data-go="#contact">Contact</a></li></ul>
+<ul><li><a href="#about" data-go="#about">About</a></li><li><a href="#works" data-go="#works">Selected works</a></li><li><a href="#cats" data-go="#cats">Categories</a></li><li><a href="#journey" data-go="#journey">Journey</a></li><li><a href="#certificates" data-go="#certificates">Certificates</a></li><li><a href="#skills" data-go="#skills">Skills</a></li><li><a href="#contact" data-go="#contact">Contact</a></li></ul>
 <button id="mb" aria-expanded="false" aria-controls="menu">Menu</button></nav>
 <div id="menu" aria-label="Menu"></div>
 
@@ -180,6 +180,7 @@ if(cmsProfile.heroWord)HERO_WORD=cmsProfile.heroWord;
 if(typeof cmsProfile.portraitImage==='string')PORTRAIT_IMG=cmsProfile.portraitImage;
 if(typeof cmsProfile.revealImage==='string')REVEAL_IMG=cmsProfile.revealImage;
 if(cmsProfile.pageTitle)document.title=cmsProfile.pageTitle;
+if(cmsProfile.name){const brand=document.querySelector('nav a b');if(brand)brand.textContent=cmsProfile.name;const loaderName=document.querySelector('#pl span');if(loaderName)loaderName.innerHTML=cmsProfile.name+'<br>Graphic designer';const footer=document.querySelector('footer > span');if(footer)footer.textContent='© '+new Date().getFullYear()+' '+cmsProfile.name;}
 const intro=document.querySelector('#heroIntro');if(intro&&cmsProfile.heroIntro){intro.textContent=cmsProfile.heroIntro;intro.style.whiteSpace='pre-line';}
 const bio=document.querySelector('#bioText');if(bio&&cmsProfile.biography)bio.textContent=cmsProfile.biography;
 const philosophy=document.querySelector('#philosophyText');if(philosophy&&cmsProfile.philosophy)philosophy.innerHTML='<b>Design philosophy.</b> '+cmsProfile.philosophy;
