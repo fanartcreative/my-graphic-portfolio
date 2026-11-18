@@ -1,0 +1,208 @@
+media:
+  input: media
+  output: /media
+
+content:
+  - name: portfolio
+    label: Portfolio projects
+    type: file
+    path: data/projects.json
+    format: json
+    fields:
+      - name: projects
+        label: Projects
+        type: object
+        list:
+          min: 0
+          max: 100
+          collapsible: true
+        fields:
+          - name: slug
+            label: Project URL ID
+            type: string
+            required: true
+            pattern: "^[a-z0-9-]+$"
+          - name: title
+            label: Project title
+            type: string
+            required: true
+          - name: category
+            label: Category
+            type: string
+            required: true
+          - name: year
+            label: Year
+            type: string
+          - name: description
+            label: Project description
+            type: text
+          - name: concept
+            label: Design concept
+            type: text
+          - name: process
+            label: Creative process
+            type: string
+            list: true
+          - name: tools
+            label: Software used
+            type: string
+            list: true
+          - name: gallery
+            label: Project images (cover first, then gallery)
+            type: image
+            options:
+              multiple:
+                max: 5
+              unique: true
+              extensions: [jpg, jpeg, png, webp]
+              rename: safe
+          - name: colors
+            label: Artwork colors
+            type: string
+            list:
+              min: 3
+              max: 3
+  - name: profile
+    label: Profile
+    type: file
+    path: data/profile.json
+    format: json
+    fields:
+      - name: pageTitle
+        label: Browser tab title
+        type: string
+      - name: name
+        label: Your name
+        type: string
+      - name: heroWord
+        label: Large hero word
+        type: string
+      - name: heroIntro
+        label: Hero introduction
+        type: text
+      - name: biography
+        label: About me
+        type: text
+      - name: philosophy
+        label: Design philosophy
+        type: text
+      - name: portraitImage
+        label: Profile photo
+        type: image
+        options:
+          path: profile
+      - name: revealImage
+        label: Reveal photo
+        type: image
+        options:
+          path: profile
+      - name: stats
+        label: Profile statistics
+        type: object
+        list:
+          min: 0
+          max: 6
+          collapsible: true
+        fields:
+          - name: label
+            type: string
+          - name: value
+            type: number
+      - name: tags
+        label: Expertise tags
+        type: string
+        list: true
+
+  - name: skills
+    label: Skills
+    type: file
+    path: data/skills.json
+    format: json
+    fields:
+      - name: disciplines
+        label: Design disciplines
+        type: text
+      - name: software
+        label: Software skills
+        type: object
+        list:
+          min: 0
+          max: 20
+          collapsible: true
+        fields:
+          - name: name
+            type: string
+          - name: level
+            label: Skill level (0–100)
+            type: number
+
+  - name: experience
+    label: Experience
+    type: file
+    path: data/experience.json
+    format: json
+    fields:
+      - name: items
+        label: Experience entries
+        type: object
+        list:
+          min: 0
+          max: 50
+          collapsible: true
+        fields:
+          - name: year
+            type: string
+          - name: title
+            type: string
+          - name: description
+            type: text
+
+  - name: certificates
+    label: Certificates
+    type: file
+    path: data/certificates.json
+    format: json
+    fields:
+      - name: items
+        label: Certificates
+        type: object
+        list:
+          min: 0
+          max: 50
+          collapsible: true
+        fields:
+          - name: title
+            type: string
+          - name: issuer
+            type: string
+          - name: year
+            type: string
+          - name: credentialUrl
+            label: Credential link
+            type: string
+          - name: image
+            label: Certificate image
+            type: image
+            options:
+              path: certificates
+
+  - name: contact
+    label: Contact
+    type: file
+    path: data/contact.json
+    format: json
+    fields:
+      - name: email
+        type: string
+      - name: socials
+        label: Social media links
+        type: object
+        list:
+          min: 0
+          max: 10
+          collapsible: true
+        fields:
+          - name: name
+            type: string
+          - name: url
+            type: string

@@ -1,0 +1,17 @@
+{
+  "email": "hello@yourname.com",
+  "socials": [
+    {
+      "name": "Behance",
+      "url": "https://www.behance.net/"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://www.instagram.com/"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/"
+    }
+  ]
+}
